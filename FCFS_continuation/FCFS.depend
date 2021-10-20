@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1632370876 source:c:\users\alberto\desktop\fcfs\main.cpp
+	<iostream>
+	"principal.h"
+
+1633547869 c:\users\alberto\desktop\fcfs\principal.h
+	<iostream>
+	<cstdlib>
+	<vector>
+	<queue>
+	<Windows.h>
+	<unistd.h>
+	<conio.h>
+	"proceso.h"
+	"administra_procesos.h"
+
+1632449098 c:\users\alberto\desktop\fcfs\proceso.h
+	<sstream>
+
+1633488169 c:\users\alberto\desktop\fcfs\administra_procesos.h
+	<queue>
+	<vector>
+	<cmath>
+	<ctime>
+	"proceso.h"
+

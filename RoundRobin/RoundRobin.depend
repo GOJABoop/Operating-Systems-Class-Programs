@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1634671470 source:c:\users\alberto\desktop\roundrobin\main.cpp
+	<iostream>
+	"principal.h"
+
+1634672647 c:\users\alberto\desktop\roundrobin\principal.h
+	<iostream>
+	<cstdlib>
+	<vector>
+	<queue>
+	<Windows.h>
+	<unistd.h>
+	<conio.h>
+	"proceso.h"
+	"administra_procesos.h"
+
+1634671452 c:\users\alberto\desktop\roundrobin\proceso.h
+	<sstream>
+
+1634671521 c:\users\alberto\desktop\roundrobin\administra_procesos.h
+	<queue>
+	<vector>
+	<cmath>
+	<ctime>
+	"proceso.h"
+
+1634671470 source:c:\users\alberto\desktop\7mo\sso\act 10\roundrobin\main.cpp
+	<iostream>
+	"principal.h"
+
+1634680826 c:\users\alberto\desktop\7mo\sso\act 10\roundrobin\principal.h
+	<iostream>
+	<cstdlib>
+	<vector>
+	<queue>
+	<Windows.h>
+	<unistd.h>
+	<conio.h>
+	"proceso.h"
+	"administra_procesos.h"
+
+1634671452 c:\users\alberto\desktop\7mo\sso\act 10\roundrobin\proceso.h
+	<sstream>
+
+1634671521 c:\users\alberto\desktop\7mo\sso\act 10\roundrobin\administra_procesos.h
+	<queue>
+	<vector>
+	<cmath>
+	<ctime>
+	"proceso.h"
+

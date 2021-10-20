@@ -1,0 +1,251 @@
+#ifndef PRINCIPAL_H_INCLUDED
+#define PRINCIPAL_H_INCLUDED
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <queue>
+#include <Windows.h>
+#include <unistd.h>
+#include <conio.h>
+#include "proceso.h"
+#include "administra_procesos.h"
+#define RANURAS 4
+
+using namespace std;
+
+class Principal{
+private:
+    int numProcesos;
+    int contadorGlobal;
+    AdministraProcesos *procesos;
+    queue<Proceso*> memoria;
+    queue<Proceso*> bloqueados;
+    vector<Proceso*> procesosTerminados;
+    vector<Proceso*> listaDeBloqueados;
+    vector<Proceso*> listaDeProcesosEnMemoria;
+public:
+    Principal(){
+        numProcesos = 0;
+        contadorGlobal = 0;
+        procesos = new AdministraProcesos();
+        capturaNumeroProcesos();
+        FCFS();
+    }
+
+    ~Principal(){
+        delete procesos;
+        procesos = nullptr;
+    }
+private:
+    void capturaNumeroProcesos(){
+        cout << "BIENVENIDO" << endl;
+        while(numProcesos < 1){
+            cout << "Ingrese el numero de procesos: ";
+            cin >> numProcesos;
+        }
+        system("cls || clear");
+        for(int i = 0; i < numProcesos; i++){
+            procesos->agregaProceso();
+        }
+        cout << "Procesos creados exitosamente, presione <ENTER> para continuar . . ." << endl;
+        cin.get();
+        cin.get();
+        system("cls || clear");
+    }
+
+    void FCFS(){
+        cargaProcesos();
+        Proceso *p;
+        while(!memoria.empty() or !bloqueados.empty()){
+            if(!memoria.empty()){
+                p = memoria.front();
+                memoria.pop();
+                ejecutaProceso(p);
+            }
+            else{
+                p = nullptr;
+                ejecutaProcesoNulo(p);
+            }
+        }
+        imprimirPantalla(nullptr);
+        cout << endl << "Proceso terminado exitosamente, presione <ENTER> para terminar. . ."<< endl;
+        cin.get();
+    }
+
+    void cargaProcesos(){
+        Proceso *p;
+        for(int i = 0; i < RANURAS and !procesos->vacio(); i++){
+            p = procesos->getSiguienteProceso();
+            p->setTiempoLlegada(contadorGlobal);
+            memoria.push(p);
+        }
+    }
+
+    void cargaProceso(){
+        Proceso *p;
+        if(!procesos->vacio()){
+            p = procesos->getSiguienteProceso();
+            p->setTiempoLlegada(contadorGlobal);
+            memoria.push(p);
+        }
+    }
+
+    void ejecutaProceso(Proceso *p){
+        bool continuar = true;
+        char tecla = ' ';
+        while(continuar){
+            while(!kbhit() and p->getTiempoRestante() != 0){
+                actualizarColaBloqueados();
+                actualizarListaMemoria();
+                imprimirPantalla(p);
+                if(!p->fueRespondido()){
+                    p->setTiempoRespuesta(contadorGlobal - p->getTiempoLlegada());
+                    p->setRespondido(true);
+                }
+                contadorGlobal++;
+                p->setTiempoTranscurrido(p->getTiempoTranscurrido()+1);
+                p->setTiempoRestante(p->getTiempoRestante()-1);
+                Sleep(1000);
+                if(p->getTiempoRestante() == 0){
+                    continuar = false;
+                    procesos->calculaOperacion(p);
+                    calculaTiemposProceso(p);
+                    procesosTerminados.push_back(p);
+                    cargaProceso();
+                }
+            }
+            if(p->getTiempoRestante() != 0){
+                tecla  = getch();
+                switch(tecla){
+                    case 'p':
+                        cout << "Programa en pausa presione 'c' para continuar ..." << endl;
+                        while(getch() != 'c');
+                        break;
+                    case 'e':
+                        bloqueados.push(p);
+                        continuar = false;
+                        break;
+                    case 'w':
+                        p->setError(true);
+                        procesosTerminados.push_back(p);
+                        calculaTiemposProceso(p);
+                        cargaProceso();
+                        continuar = false;
+                        break;
+                    default: break;
+                }
+            }
+        }
+    }
+
+    void ejecutaProcesoNulo(Proceso *p){
+        bool continuar = true;
+        char tecla = ' ';
+        while(continuar){
+            while(!kbhit() and memoria.empty()){
+                actualizarColaBloqueados();
+                actualizarListaMemoria();
+                imprimirPantalla(p);
+                contadorGlobal++;
+                Sleep(1000);
+            }
+            if(memoria.empty()){
+                tecla  = getch();
+                switch(tecla){
+                    case 'p':
+                        cout << "Programa en pausa presione 'c' para continuar ..." << endl;
+                        while(getch() != 'c');
+                        break;
+                    default: break;
+                }
+            }else{
+                continuar = false;
+            }
+        }
+    }
+
+    void actualizarColaBloqueados(){
+        listaDeBloqueados.clear();
+        Proceso *p;
+        for(unsigned int i = 0; i < bloqueados.size(); i++){
+            p = bloqueados.front();
+            bloqueados.pop();
+            p->setTiempoBloqueado(p->getTiempoBloqueado() + 1);
+            if(p->getTiempoBloqueado() == 7){
+                p->setTiempoBloqueado(0);
+                memoria.push(p);
+            }
+            else{
+                bloqueados.push(p);
+                listaDeBloqueados.push_back(p);
+            }
+        }
+    }
+
+    void actualizarListaMemoria(){
+        listaDeProcesosEnMemoria.clear();
+        for(unsigned int i = 0; i < memoria.size(); i++){
+            listaDeProcesosEnMemoria.push_back(memoria.front());
+            memoria.pop();
+            memoria.push(listaDeProcesosEnMemoria[i]);
+        }
+    }
+
+    void calculaTiemposProceso(Proceso *p){
+        p->setTiempoFinalizacion(contadorGlobal);
+        p->setTiempoServicio(p->getTiempoTranscurrido());
+        p->setTiempoRetorno(p->getTiempoFinalizacion() - p->getTiempoLlegada());
+        p->setTiempoEspera(p->getTiempoRetorno() - p->getTiempoServicio());
+    }
+
+    void imprimirPantalla(Proceso *proceso){
+        Proceso *p;
+        system("cls || clear");
+        //PROCESO EN EJECUCION
+        cout << "PROCESOS NUEVOS: " << procesos->getProcesosNuevos() << endl;
+        cout << "CONTADOR GLOBAL: " << contadorGlobal << endl << endl;
+        cout << "-------------------PROCESO EN EJECUCION--------------------" << endl;
+        cout << "ID \tTME \tTT \tTR \tOPERACION" << endl;
+        if(proceso != nullptr){
+            cout << proceso->toString() << endl;
+        }
+        //PROCESOS LISTOS
+        cout << endl << "--------------PROCESOS LISTOS-------------" << endl;
+        cout << "ID \tTME \tTT" << endl;
+        for(unsigned int i = 0;  i < listaDeProcesosEnMemoria.size(); i++){
+            p = listaDeProcesosEnMemoria[i];
+            cout << p->getId() << " \t" << p->getTiempoMaxEstimado() << " \t"<< p->getTiempoTranscurrido() << endl;
+        }
+        //PROCESOS BLOQUEADOS
+        cout << endl << "------------PROCESOS BLOQUEADOS------------" << endl;
+        cout << "ID \tTTB" << endl;
+        for(unsigned int i = 0;  i < listaDeBloqueados.size(); i++){
+            p = listaDeBloqueados[i];
+            cout << p->getId() << " \t" << p->getTiempoBloqueado() << endl;
+        }
+        //PROCESOS TERMINADOS
+        cout << endl << "------------PROCESOS TERMINADOS-----------" << endl;
+        cout << "ID\tOPERACION\tRESULTADO\tTME\tTRTNT\tTT\tTLL\tTF\tTRET\tTRES\tTE\tTS" << endl;
+        for(unsigned int i = 0; i < procesosTerminados.size(); i++){
+            p = procesosTerminados[i];
+            cout << p->getId();
+            if(p->getError()==false){
+                cout << "\t" << p->getOperandoA() << " " << p->getOperacion() << " " << p->getOperandoB() << " = \t" << p->getResultado();
+            }
+            else{
+                cout << "\t" << p->getOperandoA() << " " << p->getOperacion() << " "<< p->getOperandoB() << " = \tERROR";
+            }
+            cout << "\t\t" << p->getTiempoMaxEstimado()
+            << "\t" << p->getTiempoRestante()
+            << "\t" << p->getTiempoTranscurrido()
+            << "\t" << p->getTiempoLlegada()
+            << "\t" << p->getTiempoFinalizacion()
+            << "\t" << p->getTiempoRetorno()
+            << "\t" << p->getTiempoRespuesta()
+            << "\t" << p->getTiempoEspera()
+            << "\t" << p->getTiempoServicio() << endl;
+        }
+    }
+};
+
+#endif // PRINCIPAL_H_INCLUDED

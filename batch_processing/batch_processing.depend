@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1630114944 source:c:\users\alberto\desktop\batch_processing\main.cpp
+	<iostream>
+	<cstdlib>
+	<vector>
+	<queue>
+	<cmath>
+	<Windows.h>
+	<unistd.h>
+	"proceso.h"
+
+1630101669 c:\users\alberto\desktop\batch_processing\proceso.h
+	<sstream>
+
