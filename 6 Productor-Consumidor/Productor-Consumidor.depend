@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1635985310 source:c:\users\alberto\desktop\miniproyectos\operating systems class programs\6 productor-consumidor\main.cpp
+	<iostream>
+	"interfaz.h"
+
+1635993747 c:\users\alberto\desktop\miniproyectos\operating systems class programs\6 productor-consumidor\interfaz.h
+	<cstdlib>
+	<unistd.h>
+	<conio.h>
+	<Windows.h>
+	"contenedor.h"
+	"sorteo.h"
+	"constantes.h"
+
+1635993794 c:\users\alberto\desktop\miniproyectos\operating systems class programs\6 productor-consumidor\contenedor.h
+	"constantes.h"
+
+1635995176 c:\users\alberto\desktop\miniproyectos\operating systems class programs\6 productor-consumidor\sorteo.h
+	<ctime>
+	"constantes.h"
+
+1635993797 c:\users\alberto\desktop\miniproyectos\operating systems class programs\6 productor-consumidor\constantes.h
+
