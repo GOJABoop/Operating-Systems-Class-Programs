@@ -1,0 +1,37 @@
+# depslib dependency file v1.0
+1636677256 source:c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\main.cpp
+	<iostream>
+	"principal.h"
+
+1636688087 c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\principal.h
+	<iostream>
+	<cstdlib>
+	<vector>
+	<queue>
+	<Windows.h>
+	<unistd.h>
+	<conio.h>
+	"proceso.h"
+	"administra_proceso.h"
+	"administra_memoria.h"
+	"constantes.h"
+
+1636678712 c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\proceso.h
+	<sstream>
+
+1636682337 c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\administra_proceso.h
+	<queue>
+	<vector>
+	<cmath>
+	<ctime>
+	"proceso.h"
+
+1636688566 c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\administra_memoria.h
+	"marco.h"
+	"constantes.h"
+
+1636685674 c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\marco.h
+	"constantes.h"
+
+1636685659 c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\constantes.h
+

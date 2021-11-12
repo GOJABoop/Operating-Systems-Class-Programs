@@ -28,7 +28,6 @@ public:
     }
 private:
     void productor_consumidor(){
-        cout << ejecutar << endl;
         while(ejecutar){
             realizaProceso();
         }
