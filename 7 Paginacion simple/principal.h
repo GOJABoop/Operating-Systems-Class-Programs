@@ -64,7 +64,6 @@ private:
     void RoundRobin(){
         cargaProcesos();
         Proceso *p;
-        cout << "llega a RR" << endl;
         while(!listos.empty() or !bloqueados.empty()){
             if(!listos.empty()){
                 p = listos.front();
@@ -86,7 +85,6 @@ private:
         while(memoria->hayEspacioParaProceso(p->getTamanio())){
             p = procesos->extraeProcesoDelFrente();
             p->setTiempoLlegada(contadorGlobal);
-            cout << "aqui si llega" << endl;
             memoria->reservaEspacios(p);
             listos.push(p);
             if(procesos->vacio()) break;
@@ -255,10 +253,17 @@ private:
     void imprimirPantalla(Proceso *proceso){
         Proceso *p;
         system("cls || clear");
-        //PROCESO EN EJECUCION
         cout << "PROCESOS NUEVOS: " << procesos->getProcesosNuevos() << endl;
+        cout << "SIGUIENTE PROCESO: ";
+        if(!procesos->vacio()){
+            p = procesos->siguienteProceso();
+            cout << "ID: "<< p->getId() << " Espacio: " << p->getTamanio() << endl;
+        } else{
+            cout << " No hay procesos NUEVOS" << endl;
+        }
         cout << "CONTADOR GLOBAL: " << contadorGlobal << endl;
         cout << "VALOR DEL QUANTUM: " << quantum << endl << endl;
+        //PROCESO EN EJECUCION
         cout << "-------------------PROCESO EN EJECUCION--------------------" << endl;
         cout << "TTQ \tID \tTME \tTT \tTR \tOPERACION" << endl;
         if(proceso != nullptr){

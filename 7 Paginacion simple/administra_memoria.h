@@ -77,11 +77,42 @@ public:
     std::string aCadena(){
         std::string representacion("");
 
-        for(int i= 0; i < NUMERO_MARCOS; i++){
-            if(i == NUMERO_MARCOS/2) representacion += "\n";
+        for(int i= 0; i < 120; i++){
+            representacion += "_";
+        }
+        representacion += "\n";
+        for(int i= 0; i < NUMERO_MARCOS/2; i++){
+            representacion += memoria[i].formatoIDMarco();
+        }
+        representacion += "| ID MARCO\n";
+        for(int i= 0; i < NUMERO_MARCOS/2; i++){
+            representacion += memoria[i].formatoIDProceso();
+        }
+        representacion += "| ID PROCESO\n";
+        for(int i= 0; i < NUMERO_MARCOS/2; i++){
             representacion += "|";
             representacion += memoria[i].aCadena();
         }
+        representacion += "| MEMORIA\n"; //segundo bloque
+
+
+        for(int i= 0; i < 120; i++){
+            representacion += "_";
+        }
+        representacion += "\n";
+        for(int i= NUMERO_MARCOS/2; i < NUMERO_MARCOS; i++){
+            representacion += memoria[i].formatoIDMarco();
+        }
+        representacion += "| ID MARCO\n";
+        for(int i= NUMERO_MARCOS/2; i < NUMERO_MARCOS; i++){
+            representacion += memoria[i].formatoIDProceso();
+        }
+        representacion += "| ID PROCESO\n";
+        for(int i= NUMERO_MARCOS/2; i < NUMERO_MARCOS; i++){
+            representacion += "|";
+            representacion += memoria[i].aCadena();
+        }
+        representacion += "| MEMORIA\n";
         return representacion;
     }
 };

@@ -35,3 +35,40 @@
 
 1636685659 c:\users\alberto\desktop\miniproyectos\operating systems class programs\paginacion_simple\constantes.h
 
+1636677256 source:c:\users\alberto\desktop\miniproyectos\operating systems class programs\7 paginacion simple\main.cpp
+	<iostream>
+	"principal.h"
+
+1636774564 c:\users\alberto\desktop\miniproyectos\operating systems class programs\7 paginacion simple\principal.h
+	<iostream>
+	<cstdlib>
+	<vector>
+	<queue>
+	<Windows.h>
+	<unistd.h>
+	<conio.h>
+	"proceso.h"
+	"administra_proceso.h"
+	"administra_memoria.h"
+	"constantes.h"
+
+1636678712 c:\users\alberto\desktop\miniproyectos\operating systems class programs\7 paginacion simple\proceso.h
+	<sstream>
+
+1636682337 c:\users\alberto\desktop\miniproyectos\operating systems class programs\7 paginacion simple\administra_proceso.h
+	<queue>
+	<vector>
+	<cmath>
+	<ctime>
+	"proceso.h"
+
+1636764414 c:\users\alberto\desktop\miniproyectos\operating systems class programs\7 paginacion simple\administra_memoria.h
+	"marco.h"
+	"constantes.h"
+
+1636765247 c:\users\alberto\desktop\miniproyectos\operating systems class programs\7 paginacion simple\marco.h
+	"constantes.h"
+	<sstream>
+
+1636685659 c:\users\alberto\desktop\miniproyectos\operating systems class programs\7 paginacion simple\constantes.h
+

@@ -1,6 +1,7 @@
 #ifndef MARCO_H_INCLUDED
 #define MARCO_H_INCLUDED
 #include "constantes.h"
+#include <sstream>
 
 class Marco{
 private:
@@ -51,6 +52,39 @@ public:
     bool estaOcupado(){
         return ocupado;
     }
+    std::string formatoIDMarco(){
+        std::string representacion("");
+        std::stringstream ss;
+        representacion += "|  ";
+        ss << id;
+        representacion +=  ss.str();
+        if(representacion.length() > 4){
+           representacion += " ";
+        }else{
+            representacion += "  ";
+        }
+        return representacion;
+    }
+
+    std::string formatoIDProceso(){
+        std::string representacion("");
+        std::stringstream ss;
+        representacion += "|  ";
+        if(idDeProceso != SISTEMA_OPERATIVO){
+            ss << idDeProceso;
+            representacion +=  ss.str();
+        }
+        else{
+            representacion +=  "SO";
+        }
+        if(representacion.length() > 4){
+           representacion += " ";
+        }else{
+            representacion += "  ";
+        }
+        return representacion;
+    }
+
     std::string aCadena(){
         std::string marco("");
         for(int i = 0; i < CAPACIDAD_MARCO; i++){
@@ -58,7 +92,7 @@ public:
                 marco += "*";
             }
             else{
-                marco += "_";
+                marco += "-";
             }
         }
         return marco;
