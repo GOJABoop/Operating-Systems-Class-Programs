@@ -1,5 +1,5 @@
-#ifndef PRINCIPAL_H_INCLUDED
-#define PRINCIPAL_H_INCLUDED
+#ifndef INTERFAZ_H_INCLUDED
+#define INTERFAZ_H_INCLUDED
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -10,11 +10,12 @@
 #include "proceso.h"
 #include "administra_proceso.h"
 #include "administra_memoria.h"
+#include "memoria_secundaria.h"
 #include "constantes.h"
 
 using namespace std;
 
-class Principal{
+class Interfaz{
 private:
     int numProcesos;
     int contadorGlobal;
@@ -22,23 +23,25 @@ private:
     int contadorQuantum;
     AdministraProcesos *procesos;
     AdministraMemoria *memoria;
+    MemoriaSecundaria* suspendidos;
     queue<Proceso*> listos;
     queue<Proceso*> bloqueados;
     vector<Proceso*> procesosTerminados;
     vector<Proceso*> listaDeBloqueados;
     vector<Proceso*> listaDeProcesosListos;
 public:
-    Principal(){
+    Interfaz(){
         numProcesos = 0;
         contadorGlobal = 0;
         contadorQuantum = 0;
         procesos = new AdministraProcesos();
         memoria = new AdministraMemoria();
+        suspendidos = new MemoriaSecundaria();
         capturaNumeroProcesos();
         RoundRobin();
     }
 
-    ~Principal(){
+    ~Interfaz(){
         delete procesos;
         procesos = nullptr;
     }
@@ -64,7 +67,7 @@ private:
     void RoundRobin(){
         cargaProcesos();
         Proceso *p;
-        while(!listos.empty() or !bloqueados.empty()){
+        while(!listos.empty() or !bloqueados.empty() or !suspendidos->estaVacio()){
             if(!listos.empty()){
                 p = listos.front();
                 listos.pop();
@@ -169,6 +172,23 @@ private:
                         cout << "Tabla de paginas presione 'c' para continuar ..." << endl;
                         while(getch() != 'c');
                         break;
+                    case 's':
+                        if(!bloqueados.empty()){
+                            suspendidos->agregaProcesoSuspendido(bloqueados.front());
+                            memoria->liberaEspacios(bloqueados.front());
+                            bloqueados.pop();
+                        }
+                        break;
+                    case 'r':
+                        if(!suspendidos->estaVacio()){
+                            if(memoria->hayEspacioParaProceso(suspendidos->tamanioSiguienteProceso())){
+                                Proceso* aux;
+                                aux = suspendidos->extraeProcesoDelFrente();
+                                memoria->reservaEspacios(aux);
+                                listos.push(aux);
+                            }
+                        }
+                        break;
                     default: break;
                 }
             }
@@ -205,6 +225,23 @@ private:
                     case 't':
                         cout << "Tabla de paginas presione 'c' para continuar ..." << endl;
                         while(getch() != 'c');
+                        break;
+                    case 's':
+                        if(!bloqueados.empty()){
+                            suspendidos->agregaProcesoSuspendido(bloqueados.front());
+                            memoria->liberaEspacios(bloqueados.front());
+                            bloqueados.pop();
+                        }
+                        break;
+                    case 'r':
+                        if(!suspendidos->estaVacio()){
+                            if(memoria->hayEspacioParaProceso(suspendidos->tamanioSiguienteProceso())){
+                                Proceso* aux;
+                                aux = suspendidos->extraeProcesoDelFrente();
+                                memoria->reservaEspacios(aux);
+                                listos.push(aux);
+                            }
+                        }
                         break;
                     default: break;
                 }
@@ -262,7 +299,8 @@ private:
             cout << " No hay procesos NUEVOS" << endl;
         }
         cout << "CONTADOR GLOBAL: " << contadorGlobal << endl;
-        cout << "VALOR DEL QUANTUM: " << quantum << endl << endl;
+        cout << "VALOR DEL QUANTUM: " << quantum << endl;
+        cout << "PROCESOS SUSPENDIDOS: " << suspendidos->numeroProcesosSuspendidos() << endl << endl;
         //PROCESO EN EJECUCION
         cout << "-------------------PROCESO EN EJECUCION--------------------" << endl;
         cout << "TTQ \tID \tTME \tTT \tTR \tOPERACION \tESPACIO" << endl;
@@ -386,4 +424,5 @@ private:
          }
     }
 };
-#endif // PRINCIPAL_H_INCLUDED
+
+#endif // INTERFAZ_H_INCLUDED

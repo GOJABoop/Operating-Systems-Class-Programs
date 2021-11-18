@@ -1,5 +1,6 @@
 #ifndef PROCESO_H_INCLUDED
 #define PROCESO_H_INCLUDED
+
 #include <sstream>
 
 class Proceso{
@@ -163,4 +164,5 @@ public:
         return ss.str();
     }
 };
+
 #endif // PROCESO_H_INCLUDED
