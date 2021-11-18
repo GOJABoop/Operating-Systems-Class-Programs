@@ -177,6 +177,7 @@ private:
                             suspendidos->agregaProcesoSuspendido(bloqueados.front());
                             memoria->liberaEspacios(bloqueados.front());
                             bloqueados.pop();
+                            cargaProceso();
                         }
                         break;
                     case 'r':
@@ -231,6 +232,7 @@ private:
                             suspendidos->agregaProcesoSuspendido(bloqueados.front());
                             memoria->liberaEspacios(bloqueados.front());
                             bloqueados.pop();
+                            cargaProceso();
                         }
                         break;
                     case 'r':
@@ -298,9 +300,15 @@ private:
         } else{
             cout << " No hay procesos NUEVOS" << endl;
         }
-        cout << "CONTADOR GLOBAL: " << contadorGlobal << endl;
-        cout << "VALOR DEL QUANTUM: " << quantum << endl;
-        cout << "PROCESOS SUSPENDIDOS: " << suspendidos->numeroProcesosSuspendidos() << endl << endl;
+        cout << "VALOR DEL QUANTUM: " << quantum << " CONTADOR GLOBAL: " << contadorGlobal << endl;
+        cout << "PROCESOS SUSPENDIDOS: " << suspendidos->numeroProcesosSuspendidos() << endl;
+        cout << "SIGUIENTE PROCESO SUSPENDIDO: ";
+        if(!suspendidos->estaVacio()){
+            cout << "ID: " << suspendidos->idSiguienteProceso()
+                 << " PESO: "<< suspendidos->tamanioSiguienteProceso()<< endl << endl;
+        } else{
+            cout << " No hay procesos SUSPENDIDOS" << endl << endl;
+        }
         //PROCESO EN EJECUCION
         cout << "-------------------PROCESO EN EJECUCION--------------------" << endl;
         cout << "TTQ \tID \tTME \tTT \tTR \tOPERACION \tESPACIO" << endl;

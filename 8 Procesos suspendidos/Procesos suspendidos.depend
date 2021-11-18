@@ -44,3 +44,48 @@
 	"proceso.h"
 	"constantes.h"
 
+1637180842 source:c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\main.cpp
+	<iostream>
+	"interfaz.h"
+
+1637264357 c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\interfaz.h
+	<iostream>
+	<cstdlib>
+	<vector>
+	<queue>
+	<Windows.h>
+	<unistd.h>
+	<conio.h>
+	"proceso.h"
+	"administra_proceso.h"
+	"administra_memoria.h"
+	"memoria_secundaria.h"
+	"constantes.h"
+
+1637180280 c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\proceso.h
+	<sstream>
+
+1637179628 c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\administra_proceso.h
+	<queue>
+	<vector>
+	<cmath>
+	<ctime>
+	"proceso.h"
+
+1637179398 c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\administra_memoria.h
+	"marco.h"
+	"constantes.h"
+
+1637180187 c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\marco.h
+	"constantes.h"
+	<sstream>
+
+1637196551 c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\constantes.h
+
+1637257955 c:\users\alberto\desktop\miniproyectos\operating systems class programs\8 procesos suspendidos\memoria_secundaria.h
+	<queue>
+	<fstream>
+	<sstream>
+	"proceso.h"
+	"constantes.h"
+

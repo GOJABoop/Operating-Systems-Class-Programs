@@ -11,7 +11,7 @@ private:
     int cuentaProcesos;
     int indiceArchivo;
     std::queue<int> espaciosDeProcesos;
-
+    std::queue<int> idsDeProcesos;
     void iniciarArchivo(){
         std::ofstream archivo;
         archivo.open(NOMBRE_ARCHIVO_SUSPENDIDOS, std::ios::out | std::ios::trunc);
@@ -42,6 +42,9 @@ public:
     int tamanioSiguienteProceso(){
         return espaciosDeProcesos.front();
     }
+    int idSiguienteProceso(){
+        return idsDeProcesos.front();
+    }
 
     void agregaProcesoSuspendido(Proceso *p){
         std::ofstream archivo;
@@ -69,6 +72,7 @@ public:
         }
         cuentaProcesos++;
         espaciosDeProcesos.push(p->getTamanio());
+        idsDeProcesos.push(p->getId());
     }
 
     Proceso* extraeProcesoDelFrente(){
@@ -122,6 +126,7 @@ public:
             indiceArchivo++;
             cuentaProcesos--;
             espaciosDeProcesos.pop();
+            idsDeProcesos.pop();
             return p;
         }
         else {
